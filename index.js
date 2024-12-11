@@ -15,8 +15,8 @@ server.use(ejsLayout)
 
 server.use(express.static('src/views'))
 
-server.get('/', productController.getProducts).get('/new', productController.getAddForm)
-server.post('/new', validationMiddleware, productController.addNewProduct)
+server.get('/', productController.getProducts).get('/add-product', productController.getAddForm).get('/update-product/:id', productController.getUpdateProductView)
+server.post('/add-product', validationMiddleware, productController.addNewProduct).post('/update-product',validationMiddleware, productController.postUpdateProduct)
 
 server.listen(3000,()=>{
     console.log('server listening on port 3000');

@@ -15,6 +15,7 @@ const validateRequest = async (req, res, next)=>{
         body("imageUrl").isURL().withMessage("Invalid Url")
         ]
     // 2. run those rules
+    console.log("inside MW",req.body);
 
     await Promise.all(rules.map(rule=> rule.run(req)))
 

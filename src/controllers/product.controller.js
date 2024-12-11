@@ -17,25 +17,29 @@ export default class ProductController {
     }
 
     addNewProduct(req,res){
-
-        // const {name, price, imageUrl} = req.body
-        // let errors = [];
-        // if(!name || name.trim()==""){
-        //     errors.push('Invalid name or name cannot be empty')
-        // }
-        // if(!price || parseFloat(price) < 1){
-        //     errors.push('Price cannot be negative')
-        // }
-        // try {
-        //     const validUrl = new URL(imageUrl)
-        // } catch (error) {
-        //     errors.push('Invalid url')  
-        // }
-        // if(errors.length > 0){
-        //     return res.render('new-product',{errorMessage: errors[0]} )
-        // }
         ProductModel.add(req.body)
-        let products = ProductModel.get()
+        var products = ProductModel.get()
         return res.render("products", {products})
+    }
+
+    getUpdateProductView(req, res, next){
+        // 1. if product exit then return 
+        const {id} = req.params
+        const productFound = ProductModel.getById(id)
+        if(productFound){
+            return res.render('update-product', {product: productFound, errorMessage: null})
+        }
+        // 2. else return error
+        else{
+            res.status(401).send('product not found')
+        }
+    }
+
+    postUpdateProduct(req,res,next){
+        console.log("inside CL",req.body);        
+        ProductModel.update(req.body)
+        var products = ProductModel.get()
+        return res.render("products", {products, errorMessage: null})
+
     }
 }
