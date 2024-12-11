@@ -11,4 +11,15 @@ export default class ProductController {
         // return res.sendFile(path.join(path.resolve(),"src","views","products.html"))
     return res.render("products", {products})
     }
+
+    getAddForm(req, res){
+        return res.render('new-product')
+    }
+
+    addNewProduct(req,res){
+
+        ProductModel.add(req.body)
+        let products = ProductModel.get()
+        return res.render("products", {products})
+    }
 }
