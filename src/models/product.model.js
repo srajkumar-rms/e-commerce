@@ -28,6 +28,11 @@ export default class ProductModel{
     static getById(id){
       return products.find(p=> p.id == id )
     }
+
+    static delete(id){
+      const index = products.findIndex(p=> p.id == id)
+      return products.splice(index, 1)
+    }
 }
 
 var products = [
