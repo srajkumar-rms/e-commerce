@@ -9,6 +9,8 @@ import { body, validationResult } from "express-validator";
 
 const validateRequest = async (req, res, next)=>{
     console.log(req.body);
+    console.log(req.file);
+    
     
     // 1. setup rules for validationResult
     const rules = [

@@ -24,7 +24,7 @@ server.get('/update-product/:id', productController.getUpdateProductView)
 
 server.post('/delete-product/:id', productController.postDeleteProduct)
 server.post('/add-product',uploadFile.single('imageUrl'),validationMiddleware, productController.addNewProduct)
-server.post('/update-product',validationMiddleware, productController.postUpdateProduct)
+server.post('/update-product',uploadFile.single('imageUrl'),validationMiddleware, productController.postUpdateProduct)
 
 
 

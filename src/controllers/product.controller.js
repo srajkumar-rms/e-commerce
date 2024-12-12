@@ -21,7 +21,15 @@ class ProductController {
         return res.render("products", { products })
     }
 
-    getUpdateProductView(req, res, next) {
+    postUpdateProduct(req, res) {
+        const {id, name, desc, price} = req.body
+        const imageUrl = "images/"+req.file.filename
+        ProductModel.update(id, name, desc, price, imageUrl)
+        var products = ProductModel.get()
+        return res.render("products", { products, errorMessage: null })
+
+    }
+    getUpdateProductView(req, res) {
         // 1. if product exit then return 
         const { id } = req.params
         const productFound = ProductModel.getById(id)
@@ -34,13 +42,6 @@ class ProductController {
         }
     }
 
-    postUpdateProduct(req, res, next) {
-        console.log("inside CL", req.body);
-        ProductModel.update(req.body)
-        var products = ProductModel.get()
-        return res.render("products", { products, errorMessage: null })
-
-    }
     postDeleteProduct(req, res, next) {
         const id = req.params.id
         const productFound = ProductModel.getById(id)

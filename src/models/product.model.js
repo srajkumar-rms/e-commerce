@@ -20,9 +20,9 @@ export default class ProductModel{
       products.push(newProduct)
     }
 
-    static update(productObj){
-      const index = products.findIndex(p=> p.id == productObj.id)
-      products[index] = productObj
+    static update(id, name, desc, price, imageUrl){
+      const index = products.findIndex(p=> p.id == id)
+      products[index] = {name, desc, price, imageUrl}
     }
     
     static getById(id){
