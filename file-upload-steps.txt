@@ -1,0 +1,5 @@
+1. Install Multer - Done
+2. Changes in views - Done
+3. Middle ware to handle files - Done
+4. Apply that middleware - Done
+5. Update controller to update urls in images

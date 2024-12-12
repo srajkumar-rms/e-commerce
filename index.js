@@ -1,27 +1,32 @@
 import express from 'express'
-import ejsLayout from 'express-ejs-layouts'
 import ProductController from './src/controllers/product.controller.js'
-import validationMiddleware from './src/middlewares/validation.middleware.js'
+import ejsLayout from 'express-ejs-layouts'
 import path from 'path'
+import validationMiddleware from './src/middlewares/validation.middleware.js'
+import {uploadFile} from './src/middlewares/file-upload.middleware.js'
+
+const server = express()
+
+server.use(express.static('public'))
 
 const productController = new ProductController()
 
-const server = express()
-server.use(express.static('public'))
+server.use(ejsLayout)
 server.use(express.urlencoded({extended: true}))
-
 server.set('view engine', 'ejs')
 server.set('views', path.join(path.resolve(),'src','views'))
 
-server.use(ejsLayout)
-
 server.use(express.static('src/views'))
 
-server.get('/', productController.getProducts).get('/add-product', productController.getAddForm).get('/update-product/:id', productController.getUpdateProductView)
+server.get('/', productController.getProducts)
+server.get('/add-product', productController.getAddForm)
+server.get('/update-product/:id', productController.getUpdateProductView)
 
 server.post('/delete-product/:id', productController.postDeleteProduct)
+server.post('/add-product',uploadFile.single('imageUrl'),validationMiddleware, productController.addNewProduct)
+server.post('/update-product',validationMiddleware, productController.postUpdateProduct)
 
-server.post('/add-product', validationMiddleware, productController.addNewProduct).post('/update-product',validationMiddleware, productController.postUpdateProduct)
+
 
 server.listen(3000,()=>{
     console.log('server listening on port 3000');

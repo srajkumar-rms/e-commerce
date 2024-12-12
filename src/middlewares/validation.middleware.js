@@ -8,11 +8,19 @@
 import { body, validationResult } from "express-validator";
 
 const validateRequest = async (req, res, next)=>{
+    console.log(req.body);
+    
     // 1. setup rules for validationResult
     const rules = [
         body("name").notEmpty().withMessage('Name is required!!'),
         body("price").isFloat({gt:0}).withMessage("Prive should be a positive value!!"),
-        body("imageUrl").isURL().withMessage("Invalid Url")
+        // body("imageUrl").isURL().withMessage("Invalid Url")
+        body("imageUrl").custom((value, {req})=> {
+            if(!req.file){
+                throw new Error("Image is required")
+            }
+            return true
+        })
         ]
     // 2. run those rules
     console.log("inside MW",req.body);
@@ -21,7 +29,8 @@ const validateRequest = async (req, res, next)=>{
 
     // 3. check if there are any error after running the rules
     var validationErrors = validationResult(req)
-
+        console.log(validationErrors);
+        
 
     if(!validationErrors.isEmpty()){
             return res.render('new-product',{errorMessage: validationErrors.array()[0].msg} )
