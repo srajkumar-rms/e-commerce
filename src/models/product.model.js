@@ -22,7 +22,7 @@ export default class ProductModel{
 
     static update(id, name, desc, price, imageUrl){
       const index = products.findIndex(p=> p.id == id)
-      products[index] = {name, desc, price, imageUrl}
+      products[index] = {id, name, desc, price, imageUrl}
     }
     
     static getById(id){
