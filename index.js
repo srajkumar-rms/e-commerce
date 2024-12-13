@@ -40,6 +40,7 @@ server.post('/update-product',auth, uploadFile.single('imageUrl'),validationMidd
 
 server.get('/register',userController.getRegister)
 server.get('/login',userController.getLogin)
+server.get('/logout', userController.logout)
 
 server.post('/register', userController.postRegister)
 server.post('/login', userController.postLogin)

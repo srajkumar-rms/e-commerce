@@ -6,11 +6,11 @@ class ProductController {
 
         var products = ProductModel.get()
         // return res.sendFile(path.join(path.resolve(),"src","views","products.html"))
-        return res.render("products", { products })
+        return res.render("products", { products, userEmail: req.session.userEmail })
     }
 
     getAddForm(req, res) {
-        return res.render('new-product', { errorMessage: null })
+        return res.render('new-product', { errorMessage: null, userEmail: req.session.userEmail })
     }
 
     addNewProduct(req, res) {
@@ -18,7 +18,7 @@ class ProductController {
         const imageUrl = "images/"+req.file.filename
         ProductModel.add(name, desc, price, imageUrl)
         var products = ProductModel.get()
-        return res.render("products", { products })
+        return res.render("products", { products, userEmail: req.session.userEmail })
     }
 
     postUpdateProduct(req, res) {
@@ -26,7 +26,7 @@ class ProductController {
         const imageUrl = "images/"+req.file.filename
         ProductModel.update(id, name, desc, price, imageUrl)
         var products = ProductModel.get()
-        return res.render("products", { products, errorMessage: null })
+        return res.render("products", { products, errorMessage: null, userEmail: req.session.userEmail })
 
     }
     getUpdateProductView(req, res) {
@@ -34,7 +34,7 @@ class ProductController {
         const { id } = req.params
         const productFound = ProductModel.getById(id)
         if (productFound) {
-            return res.render('update-product', { product: productFound, errorMessage: null })
+            return res.render('update-product', { product: productFound, errorMessage: null, userEmail: req.session.userEmail })
         }
         // 2. else return error
         else {
@@ -51,7 +51,7 @@ class ProductController {
 
         ProductModel.delete(id)
         var products = ProductModel.get()
-        return res.render('products', { products })
+        return res.render('products', { products, userEmail: req.session.userEmail })
 
     }
 }
