@@ -29,6 +29,10 @@ server.post('/add-product',uploadFile.single('imageUrl'),validationMiddleware, p
 server.post('/update-product',uploadFile.single('imageUrl'),validationMiddleware, productController.postUpdateProduct)
 
 server.get('/register',userController.getRegister)
+server.get('/login',userController.getLogin)
+
+server.post('/register', userController.postRegister)
+server.post('/login', userController.postLogin)
 
 
 
