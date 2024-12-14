@@ -27,7 +27,7 @@ export default class UserController{
         }
         req.session.userEmail = email;
         var products = ProductModel.get()
-        return res.render("products", { products, userEmail: req.session.userEmail })
+        return res.redirect("/")
     }
 
     logout(req, res){
