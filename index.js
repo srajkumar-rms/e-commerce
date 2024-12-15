@@ -14,7 +14,7 @@ const server = express()
 
 server.use(express.static('public'))
 server.use(cookieParser())
-server.use(setLastVisit)
+// server.use(setLastVisit)
 server.use(session({
     secret: 'smellykat',
     name: 'smellykat-session',
@@ -37,7 +37,7 @@ server.set('views', path.join(path.resolve(),'src','views'))
 
 server.use(express.static('src/views'))
 
-server.get('/', auth, productController.getProducts)
+server.get('/', setLastVisit, auth, productController.getProducts)
 server.get('/add-product', auth, productController.getAddForm)
 server.get('/update-product/:id', auth, productController.getUpdateProductView)
 

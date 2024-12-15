@@ -39,5 +39,6 @@ export default class UserController{
             }
             
         })
+        res.clearCookie('lastVisit')
     }
 } 
